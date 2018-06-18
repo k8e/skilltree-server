@@ -10,21 +10,23 @@ module.exports = {
   },
 
   createChild(parentId, childName) {
-    // Find parent skill
-    return Skill.findById(parentId, {
-    })
-    .then(parentSkill => {
-      if (!parentSkill) {
-        return Error("Parent skill not found!");
-      }
-      // Create skill and add as child
-      Skill.create({
-        name: childName,
+    return new Promise( (resolve, reject) => {
+      // Find parent skill
+      Skill.findById(parentId).then(parentSkill => {
+        if (!parentSkill)
+          reject(Error("Parent skill not found!"));
+
+        // Create skill and add as child
+        Skill.create({
+          name: childName,
+        })
+        .then(newSkill => {
+          parentSkill.addChild(newSkill);
+          resolve(newSkill);
+        })
+        .catch(error => { reject(error) });
       })
-      .then(newSkill => {
-        parentSkill.addChild(newSkill);
-        return newSkill;
-      });
+      .catch(error => { reject(error) });
     });
   },
 
