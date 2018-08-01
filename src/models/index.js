@@ -4,6 +4,8 @@ const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(`${__dirname}/../config/config.json`)[env];
 const Sequelize = require('sequelize');
+require('sequelize-hierarchy')(Sequelize);
+//const Sequelize = require('sequelize-hierarchy')();
 
 const models = {};
 
@@ -15,7 +17,7 @@ let skillModel = sequelizeConfig.import('./skill');
 let categoryModel = sequelizeConfig.import('./category');
 
 models[skillModel.name] = skillModel;
-models[categoryModel.name] = categoryModel;
+//models[categoryModel.name] = categoryModel;
 
 // Get associations from models
 Object.keys(models).forEach(modelName => {
@@ -25,7 +27,7 @@ Object.keys(models).forEach(modelName => {
 });
 
 // Some temp auto-populated data to develop with
-sequelizeConfig.sync({ force: true }).then(() => {
+sequelizeConfig.sync({ force: true }).then(() => { 
 
   skillModel.build({ name: "Web Development" }).save().then(parent => {
 
@@ -35,6 +37,9 @@ sequelizeConfig.sync({ force: true }).then(() => {
 
     skillModel.build({ name: 'JavaScript' }).save().then(child => {
       parent.addChild(child);
+      skillModel.build({ name: 'ES6' }).save().then(grandchild => {
+        child.addChild(grandchild);
+      });
     });
 
     skillModel.build({ name: 'Node.js' }).save().then(child => {

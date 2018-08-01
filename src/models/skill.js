@@ -16,24 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Skill.associate = (models) => {
-    Skill.belongsToMany(models.Skill, {
-      as: 'parents',
-      foreignKey: 'childId',
-      through: "SkillTree",
-    });
-
-    Skill.belongsToMany(models.Skill, {
-      as: 'children',
-      foreignKey: 'parentId',
-      through: "SkillTree",
-    });
-
-    Skill.belongsToMany(models.Category, {
-      foreignKey: 'skillId',
-      through: "SkillCategory"
-    });
-  };
+  // Activate sequelize-hierarchy
+  Skill.isHierarchy();
 
   return Skill;
 };

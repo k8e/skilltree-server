@@ -31,25 +31,7 @@ module.exports = {
   },
 
   list() {
-    return Skill.findAll({
-      // Include child skills in nested list
-      include: [
-        {
-          model: Skill,
-          as: 'children',
-          through: {attributes: []},
-        },
-        {
-          model: Skill,
-          as: 'parents',
-          through: {attributes: []},
-        },
-      ],
-      // Only include top-level skills (children are nested)
-      where: {
-        '$parents.id$' : null,
-      },
-    });
+    return Skill.findAll({ hierarchy: true });
   },
 
   retrieve(skillId) {
@@ -57,7 +39,8 @@ module.exports = {
     return Skill.findById(skillId, {
       include: [{
         model: Skill,
-        as: 'children',
+        as: 'descendents',
+        hierarchy: true,
       }],
     })
     .then(foundSkill => {
