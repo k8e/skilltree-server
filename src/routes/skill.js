@@ -20,6 +20,12 @@ module.exports = {
       .catch(error => res.status(400).send(error.message));
   },
 
+  retrieve(req, res) {
+    return skillController.retrieve(req.params.skillId)
+      .then(skill => res.status(200).send(skill))
+      .catch(error => res.status(400).send(error.message));
+  },
+
   update(req, res) {
     return skillController.update(
         req.params.skillId, 

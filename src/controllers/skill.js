@@ -36,18 +36,21 @@ module.exports = {
 
   retrieve(skillId) {
     // Get skill by ID
-    return Skill.findById(skillId, {
-      include: [{
-        model: Skill,
-        as: 'descendents',
-        hierarchy: true,
-      }],
-    })
-    .then(foundSkill => {
-      if (!foundSkill) {
-        return Error("Skill not found!");
-      }
-      return foundSkill;
+    return new Promise( (resolve, reject) => {
+      Skill.findById(skillId, {
+        include: [{
+          model: Skill,
+          as: 'descendents',
+          hierarchy: true,
+        }],
+      })
+      .then(foundSkill => {
+        if (!foundSkill)  
+          reject(Error("Skill not found!"))
+
+        resolve(foundSkill);
+      })
+      .catch(error => { reject(error) });
     });
   },
 

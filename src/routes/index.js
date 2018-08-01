@@ -14,6 +14,7 @@ module.exports = (app) => {
 
   // Skill API Methods
   app.get('/api/skills',                      skillRoutes.list);
+  app.get('/api/skills/:skillId',             skillRoutes.retrieve);
   app.post('/api/skills',                     skillRoutes.create);
   app.post('/api/skills/:skillId/children',   skillRoutes.createChild);
   app.put('/api/skills/:skillId',             skillRoutes.update);
