@@ -29,7 +29,6 @@ app.use(function(req, res, next) {
 require('./src/routes')(app);
 
 app.get('*', function(req, res) {
-  //res.send("<h1>Hello World!</h1>");
   res.render('index', {
     title: "Skilltree",
     options: {

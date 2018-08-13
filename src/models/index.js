@@ -1,17 +1,23 @@
 const fs = require('fs');
 const path = require('path');
-const basename = path.basename(module.filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(`${__dirname}/../config/config.json`)[env];
 const Sequelize = require('sequelize');
 require('sequelize-hierarchy')(Sequelize);
-//const Sequelize = require('sequelize-hierarchy')();
 
 const models = {};
 
-let sequelizeConfig = new Sequelize(
-  config.database, config.username, config.password, config
-);
+let sequelizeConfig;
+if (process.env.DATABASE_URL) { // Heroku db env variable
+  sequelizeConfig = new Sequelize(process.env.DATABASE_URL);
+} else {
+  sequelizeConfig = new Sequelize(
+    process.env.DB_NAME, 
+    process.env.DB_USERNAME, 
+    process.env.DB_PASSWORD, 
+    {
+      "dialect": "postgres"
+    }
+  );
+}
 
 let skillModel = sequelizeConfig.import('./skill');
 let categoryModel = sequelizeConfig.import('./category');
