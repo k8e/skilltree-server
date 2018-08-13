@@ -35,15 +35,14 @@ sequelizeConfig.sync({ force: true }).then(() => {
       parent.addChild(child);
     });
 
-    skillModel.build({ name: 'JavaScript' }).save().then(child => {
+    skillModel.build({ name: 'Frontend' }).save().then(child => {
       parent.addChild(child);
-      skillModel.build({ name: 'ES6' }).save().then(grandchild => {
+      skillModel.build({ name: 'JavaScript' }).save().then(grandchild => {
         child.addChild(grandchild);
       });
-    });
-
-    skillModel.build({ name: 'Node.js' }).save().then(child => {
-      parent.addChild(child);
+      skillModel.build({ name: 'Vue.js' }).save().then(grandchild => {
+        child.addChild(grandchild);
+      });
     });
 
   });

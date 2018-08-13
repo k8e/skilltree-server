@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     target: {
       type: DataTypes.DOUBLE,
       allowNull: false,
-      defaultValue: 80,
+      defaultValue: 100,
     },
   });
 
