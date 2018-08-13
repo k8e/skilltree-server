@@ -10,6 +10,6 @@ API server written in Node, using PostgreSQL.
 * ~~Create models, controllers, and routes~~
 * ~~Set up Jasmine~~
 * ~~Get MVP working~~
-* Fix issues with recursive hierarchy querying (Maybe use sequelize-hierarchy plugin)
+* ~~Fix issues with recursive hierarchy querying (Maybe use sequelize-hierarchy plugin)~~
 * Unit test all the things
 * *[To be continued]*
