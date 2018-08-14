@@ -61,13 +61,17 @@ module.exports = {
       },
     })
     .then(skill => {
-      if (!skill) {
+      if (!skill) 
         return Error("Skill not found!");
-      }
+
+      let newName = skillName || skill.name;
+      let newValue = (skillValue != null) ? skillValue : skill.value;
+      let newTarget = (skillTarget != null) ? skillTarget : skill.target;
+
       return skill.update({
-          name: skillName || skill.name,
-          value: skillValue || skill.value,
-          target: skillTarget || skill.target,
+          name: newName,
+          value: newValue,
+          target: newTarget,
         })
         .catch(error => Error(error.message));
     })
